@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>CV Papadaan Patra Jaya - Menu</title>
+<style>
+* { box-sizing: border-box; margin:0; padding:0; }
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(135deg,#0f4c75,#1b262c);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  flex-direction: column;
+  color: white;
+  overflow-x: hidden;
+}
+.menu-container {
+  background: white;
+  width: 100%;
+  max-width: 400px;
+  padding: 25px;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  text-align: center;
+}
+.logo {
+  width: 170px;
+  max-width: 60%;
+  margin-bottom: 20px;
+}
+.menu-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  margin: 12px 0;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(90deg, #ff7b00, #ffb703);
+  color: white;
+  transition: 0.3s;
+}
+.menu-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+.contact {
+  margin-top: 15px;
+  font-size: 12px;
+  color: #ffb703;
+  cursor: pointer;
+}
+.contact:hover { text-decoration: underline; }
+.back-btn {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  background: #0f4c75;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+  transition: 0.3s;
+}
+.back-btn:hover { background: #1b6ca8; transform: scale(1.05); }
+input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 6px;
+  border-radius: 10px;
+  border: 2px solid #e0e0e0;
+  font-weight: bold;
+  font-size: 15px;
+  transition: 0.3s;
+}
+input:focus {
+  border-color: #ff7b00;
+  outline: none;
+  box-shadow: 0 0 6px rgba(255,123,0,0.5);
+}
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+  color: #1b262c;
+  text-align: left;
+  font-size: 14px;
+}
+form button {
+  margin-top: 25px;
+  padding: 14px;
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 16px;
+  background: linear-gradient(90deg, #ff7b00, #ffb703);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+form button:hover {
+  transform: scale(1.03);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+.notification {
+  display:none;
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  background: rgba(15,76,117,0.95);
+  color: white;
+  font-size: 40px;
+  font-weight:bold;
+  padding: 40px 60px;
+  border-radius: 20px;
+  text-align:center;
+  z-index:2000;
+  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+}
+@media (max-width:400px) {
+  .menu-container {padding:18px;}
+  .logo {width:120px;}
+  .menu-btn {font-size:15px; padding:12px;}
+  .back-btn {padding:8px 12px; font-size:14px;}
+}
+</style>
+</head>
+<body>
+
+<!-- MENU UTAMA -->
+<div id="menu" class="menu-container">
+  <img src="image/logo.png" alt="Logo CV Papadaan Patra Jaya" class="logo">
+  <button class="menu-btn" onclick="showForm('form1')">Laporan Keuangan AC</button>
+  <button class="menu-btn" onclick="showForm('form2')">Laporan Keuangan Instalasi</button>
+  <button class="menu-btn" onclick="showForm('absen')">Absen Karyawan</button>
+  <div class="contact" onclick="window.open('https://wa.me/qr/3QRYURBTZDKIG1','_blank')">need similiar app? contact me</div>
+</div>
+
+<!-- FORM1 -->
+<div id="form1" class="menu-container" style="display:none;">
+  <button class="back-btn" onclick="showMenu()">&#8592; Kembali</button>
+  <img src="image/logo.png" class="logo">
+  <h2>LAPORAN KEUANGAN AC</h2>
+  <form id="form1Form">
+    <input type="hidden" name="type" value="form1">
+    <label>PEMASUKAN BERSIH</label>
+    <input type="number" name="pemasukan_bersih" required>
+    <label>PENGELUARAN</label>
+    <input type="number" name="pengeluaran" required>
+    <label>KETERANGAN</label>
+    <input type="text" name="keterangan" required>
+    <button type="submit" id="submitBtn1">Kirim Data</button>
+  </form>
+</div>
+
+<!-- FORM2 -->
+<div id="form2" class="menu-container" style="display:none;">
+  <button class="back-btn" onclick="showMenu()">&#8592; Kembali</button>
+  <img src="image/logo.png" class="logo">
+  <h2>LAPORAN KEUANGAN INSTALASI</h2>
+  <form id="form2Form">
+    <input type="hidden" name="type" value="form2">
+    <label>PEMASUKAN BERSIH</label>
+    <input type="number" name="pemasukan_bersih" required>
+    <label>PENGELUARAN</label>
+    <input type="number" name="pengeluaran" required>
+    <label>KETERANGAN</label>
+    <input type="text" name="keterangan" required>
+    <button type="submit" id="submitBtn2">Kirim Data</button>
+  </form>
+</div>
+
+<!-- FORM ABSEN -->
+<div id="absen" class="menu-container" style="display:none;">
+  <button class="back-btn" onclick="showMenu()">&#8592; Kembali</button>
+  <img src="image/logo.png" class="logo">
+  <h2>ABSEN KARYAWAN</h2>
+  <form id="absenForm">
+    <input type="hidden" name="type" value="absen">
+    <label>TANGGAL</label>
+    <input type="date" name="tanggal" required readonly>
+    <label>NAMA</label>
+    <input type="text" name="nama" required>
+    <label>PEKERJAAN</label>
+    <input type="text" name="pekerjaan" required>
+    <label>LOKASI</label>
+    <input type="text" name="lokasi" required>
+    <button type="submit" id="submitBtn3">Kirim Data</button>
+  </form>
+</div>
+
+<!-- NOTIFIKASI SEMUA FORM -->
+<div id="notif" class="notification">✅<br>Berhasil</div>
+
+<script>
+// SWITCH MENU
+function showForm(id) {
+  document.getElementById('menu').style.display = 'none';
+  document.getElementById(id).style.display = 'block';
+  if(id==='absen'){
+    const today = new Date().toISOString().split('T')[0];
+    document.querySelector('#absenForm input[name="tanggal"]').value = today;
+  }
+}
+function showMenu() {
+  document.getElementById('menu').style.display = 'block';
+  ['form1','form2','absen'].forEach(f=>document.getElementById(f).style.display='none');
+}
+
+// NOTIF SEMUA FORM
+function showNotification() {
+  const n = document.getElementById('notif');
+  n.style.display='block';
+  setTimeout(()=>{ n.style.display='none'; }, 2000);
+}
+
+// SCRIPT FORM
+const forms = [
+  {id:'form1Form', btn:'submitBtn1', url:'https://script.google.com/macros/s/AKfycbw9iY_QpkBhDJwytvVM8VYOROgRJlmDWuJ94coZVb9Mxw9l8-opHeLjXqKRQm4QZpvR/exec'},
+  {id:'form2Form', btn:'submitBtn2', url:'https://script.google.com/macros/s/AKfycbw9iY_QpkBhDJwytvVM8VYOROgRJlmDWuJ94coZVb9Mxw9l8-opHeLjXqKRQm4QZpvR/exec'},
+  {id:'absenForm', btn:'submitBtn3', url:'https://script.google.com/macros/s/AKfycbw9iY_QpkBhDJwytvVM8VYOROgRJlmDWuJ94coZVb9Mxw9l8-opHeLjXqKRQm4QZpvR/exec'}
+];
+forms.forEach(f=>{
+  const form = document.getElementById(f.id);
+  const btn = document.getElementById(f.btn);
+  let submitting=false;
+  form.addEventListener('submit', e=>{
+    e.preventDefault();
+    if(submitting) return;
+    submitting=true;
+    btn.disabled=true;
+    btn.innerText="Mengirim...";
+    fetch(f.url,{method:'POST', body:new FormData(form)})
+      .then(r=>r.text())
+      .then(()=>{
+        showNotification();
+        form.reset();
+        if(f.id==='absenForm'){
+          const today = new Date().toISOString().split('T')[0];
+          document.querySelector('#absenForm input[name="tanggal"]').value=today;
+        }
+      })
+      .catch(()=>{ showNotification(); })
+      .finally(()=>{ submitting=false; btn.disabled=false; btn.innerText='Kirim Data'; });
+  });
+});
+</script>
+
+</body>
+</html>

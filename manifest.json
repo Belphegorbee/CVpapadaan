@@ -1,0 +1,21 @@
+{
+  "name": "CV Papadaan Patra Jaya",
+  "short_name": "PapadaanPWA",
+  "description": "Aplikasi laporan keuangan & absensi CV Papadaan Patra Jaya",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f4c75",
+  "theme_color": "#0f4c75",
+  "icons": [
+    {
+      "src": "page/192M.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "page/512M.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

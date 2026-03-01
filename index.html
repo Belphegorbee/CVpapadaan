@@ -34,6 +34,12 @@ body {
   max-width: 60%;
   margin-bottom: 20px;
 }
+.form-title {
+  font-size: 22px;
+  color: #0f4c75;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
 .menu-btn {
   display: block;
   width: 100%;
@@ -136,6 +142,7 @@ form button:hover {
   .logo {width:120px;}
   .menu-btn {font-size:15px; padding:12px;}
   .back-btn {padding:8px 12px; font-size:14px;}
+  .form-title {font-size:18px; margin-bottom:15px;}
 }
 </style>
 </head>
@@ -161,7 +168,7 @@ if('serviceWorker' in navigator){
 <div id="form1" class="menu-container" style="display:none;">
   <button class="back-btn" onclick="showMenu()">&#8592; Kembali</button>
   <img src="image/logo.png" class="logo">
-  <h2>LAPORAN KEUANGAN AC</h2>
+  <div class="form-title">LAPORAN KEUANGAN AC</div>
   <form id="form1Form">
     <input type="hidden" name="type" value="form1">
     <label>PEMASUKAN BERSIH</label>
@@ -178,7 +185,7 @@ if('serviceWorker' in navigator){
 <div id="form2" class="menu-container" style="display:none;">
   <button class="back-btn" onclick="showMenu()">&#8592; Kembali</button>
   <img src="image/logo.png" class="logo">
-  <h2>LAPORAN KEUANGAN INSTALASI</h2>
+  <div class="form-title">LAPORAN KEUANGAN INSTALASI</div>
   <form id="form2Form">
     <input type="hidden" name="type" value="form2">
     <label>PEMASUKAN BERSIH</label>
@@ -195,7 +202,7 @@ if('serviceWorker' in navigator){
 <div id="absen" class="menu-container" style="display:none;">
   <button class="back-btn" onclick="showMenu()">&#8592; Kembali</button>
   <img src="image/logo.png" class="logo">
-  <h2>ABSEN KARYAWAN</h2>
+  <div class="form-title">ABSEN KARYAWAN</div>
   <form id="absenForm">
     <input type="hidden" name="type" value="absen">
     <label>TANGGAL</label>

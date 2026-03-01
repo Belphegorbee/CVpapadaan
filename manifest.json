@@ -1,11 +1,10 @@
 {
   "name": "CV Papadaan Patra Jaya",
-  "short_name": "PapadaanPWA",
-  "description": "Aplikasi laporan keuangan & absensi CV Papadaan Patra Jaya",
-  "start_url": "./index.html",
+  "short_name": "Papadaan",
+  "start_url": "/CVpapadaan/index.html",
   "display": "standalone",
   "background_color": "#0f4c75",
-  "theme_color": "#0f4c75",
+  "theme_color": "#1b262c",
   "icons": [
     {
       "src": "page/192M.png",

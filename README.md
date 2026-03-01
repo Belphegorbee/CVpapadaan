@@ -1,0 +1,2 @@
+# CVpapadaan
+apk khusus lutfi

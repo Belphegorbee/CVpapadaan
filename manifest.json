@@ -1,7 +1,7 @@
 {
   "name": "CV Papadaan Patra Jaya",
   "short_name": "Papadaan",
-  "start_url": "/CVpapadaan/index.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0f4c75",
   "theme_color": "#1b262c",

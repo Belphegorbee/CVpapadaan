@@ -4,7 +4,7 @@ const urlsToCache = [
   "/CVpapadaan/",
   "/CVpapadaan/index.html",
   "/CVpapadaan/manifest.json",
-  /CVpapadaan/image/logo.png,
+  "/CVpapadaan/image/logo.png,
   "/CVpapadaan/page/192M.png",
   "/CVpapadaan/page/512M.png"
 ];

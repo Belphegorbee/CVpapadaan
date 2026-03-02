@@ -226,8 +226,11 @@ function showForm(id) {
   document.getElementById('menu').style.display = 'none';
   document.getElementById(id).style.display = 'block';
   if(id==='absen'){
-    
-    document.querySelector('#absenForm input[name="tanggal"]').value = today;
+    const today = new Date();
+    const localDate = today.getFullYear() + '-' +
+                      String(today.getMonth()+1).padStart(2,'0') + '-' +
+                      String(today.getDate()).padStart(2,'0');
+    document.querySelector('#absenForm input[name="tanggal"]').value = localDate;
   }
 }
 function showMenu() {const today = new Date();

@@ -262,6 +262,10 @@ forms.forEach(f=>{
     submitting=true;
     btn.disabled=true;
     btn.innerText="Mengirim...";
+    if(f.id==='absenForm'){
+    const localDate = new Date().toISOString().split('T')[0]; // ambil tanggal hari ini
+    form.querySelector('input[name="tanggal"]').value = localDate; // timpa input
+    }
     fetch(f.url,{method:'POST', body:new FormData(form)})
       .then(r=>r.text())
       .then(()=>{

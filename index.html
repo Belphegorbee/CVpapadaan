@@ -226,11 +226,15 @@ function showForm(id) {
   document.getElementById('menu').style.display = 'none';
   document.getElementById(id).style.display = 'block';
   if(id==='absen'){
-    const today = new Date().toISOString().split('T')[0];
+    
     document.querySelector('#absenForm input[name="tanggal"]').value = today;
   }
 }
-function showMenu() {
+function showMenu() {const today = new Date();
+const localDate = today.getFullYear() + '-' +
+                  String(today.getMonth()+1).padStart(2,'0') + '-' +
+                  String(today.getDate()).padStart(2,'0');
+document.querySelector('#absenForm input[name="tanggal"]').value = localDate;
   document.getElementById('menu').style.display = 'block';
   ['form1','form2','absen'].forEach(f=>document.getElementById(f).style.display='none');
 }

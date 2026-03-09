@@ -159,26 +159,28 @@ forms.forEach(f=>{
     btn.disabled=true;
     btn.innerText="Mengirim...";
 
-    if(f.id==='absenForm'){
-      const fotoInput = document.getElementById("fotoInput");
-      const file = fotoInput.files[0];
-      const formData = new FormData(form);
-      if(file){
-        formData.append("foto", file); // <-- langsung Blob
-      }
-      fetch(f.url,{method:'POST', body:formData})
-        .then(r=>r.text())
-        .then(()=>{ 
-          showNotification(); 
-          form.reset();
-          const now = new Date();
-          const local = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0') + 'T' + String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
-          document.querySelector('#absenForm input[name="tanggal"]').value = local;
-        })
-        .catch(()=>{ showNotification(); })
-        .finally(()=>{ submitting=false; btn.disabled=false; btn.innerText='Kirim Data'; });
-      return;
-    }
+   if(f.id==='absenForm'){
+  const fotoInput = document.getElementById("fotoInput");
+  const file = fotoInput.files[0];
+  const formData = new FormData(form); // form1 + file
+  if(file) formData.append("foto", file, file.name); // pastikan ada nama file
+
+  fetch(f.url,{
+    method:'POST',
+    body: formData
+  })
+  .then(r=>r.text())
+  .then(()=>{ 
+    showNotification(); 
+    form.reset();
+    const now = new Date();
+    const local = now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0')+'T'+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+    document.querySelector('#absenForm input[name="tanggal"]').value = local;
+  })
+  .catch(()=>{ showNotification(); })
+  .finally(()=>{ submitting=false; btn.disabled=false; btn.innerText='Kirim Data'; });
+  return;
+}
 
     fetch(f.url,{method:'POST', body:new FormData(form)})
       .then(r=>r.text())

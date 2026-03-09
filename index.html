@@ -142,13 +142,11 @@ function openForm(id){ document.getElementById('menu').style.display='none'; doc
 function showMenu(){ const now = new Date(); const local = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0') + 'T' + String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0'); document.querySelector('#absenForm input[name="tanggal"]').value = local; document.getElementById('menu').style.display='block'; ['form1','form2','absen'].forEach(f=>document.getElementById(f).style.display='none'); }
 function showNotification(){ const n = document.getElementById('notif'); n.style.display='block'; setTimeout(()=>{ n.style.display='none'; }, 2000); }
 
-// FORM SUBMIT
+// FORM SUBMIT (FORM1 & FORM2)
 const forms = [
   {id:'form1Form', btn:'submitBtn1', url:'https://script.google.com/macros/s/AKfycbw9iY_QpkBhDJwytvVM8VYOROgRJlmDWuJ94coZVb9Mxw9l8-opHeLjXqKRQm4QZpvR/exec'},
-  {id:'form2Form', btn:'submitBtn2', url:'https://script.google.com/macros/s/AKfycbw9iY_QpkBhDJwytvVM8VYOROgRJlmDWuJ94coZVb9Mxw9l8-opHeLjXqKRQm4QZpvR/exec'},
-  {id:'absenForm', btn:'submitBtn3', url:'https://script.google.com/macros/s/AKfycbw9iY_QpkBhDJwytvVM8VYOROgRJlmDWuJ94coZVb9Mxw9l8-opHeLjXqKRQm4QZpvR/exec'}
+  {id:'form2Form', btn:'submitBtn2', url:'https://script.google.com/macros/s/AKfycbw9iY_QpkBhDJwytvVM8VYOROgRJlmDWuJ94coZVb9Mxw9l8-opHeLjXqKRQm4QZpvR/exec'}
 ];
-
 forms.forEach(f=>{
   const form = document.getElementById(f.id);
   const btn = document.getElementById(f.btn);
@@ -159,30 +157,6 @@ forms.forEach(f=>{
     submitting=true;
     btn.disabled=true;
     btn.innerText="Mengirim...";
-
-    if(f.id==='absenForm'){
-      const fotoInput = document.getElementById("fotoInput");
-      const file = fotoInput.files[0];
-      if(file){
-        const reader = new FileReader();
-        reader.onload = function(evt){
-          const formData = new FormData(form);
-          formData.append("fotoBase64", evt.target.result);
-          fetch(f.url,{method:'POST', body:formData})
-            .then(r=>r.text())
-            .then(()=>{ showNotification(); form.reset();
-              const now = new Date();
-              const local = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0') + 'T' + String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
-              document.querySelector('#absenForm input[name="tanggal"]').value = local;
-            })
-            .catch(()=>{ showNotification(); })
-            .finally(()=>{ submitting=false; btn.disabled=false; btn.innerText='Kirim Data'; });
-        }
-        reader.readAsDataURL(file);
-        return;
-      }
-    }
-
     fetch(f.url,{method:'POST', body:new FormData(form)})
       .then(r=>r.text())
       .then(()=>{ showNotification(); form.reset(); })
@@ -191,9 +165,75 @@ forms.forEach(f=>{
   });
 });
 
-// AMBIL LOKASI & PREVIEW FOTO
-function ambilLokasi(){ if(navigator.geolocation){ navigator.geolocation.getCurrentPosition(function(pos){ const lat = pos.coords.latitude; const lon = pos.coords.longitude; const link = "https://maps.google.com/?q="+lat+","+lon; document.getElementById("lokasiInput").value = link; }); } }
-document.getElementById("fotoInput").addEventListener("change",function(e){ const file = e.target.files[0]; if(file){ const preview = document.getElementById("previewFoto"); preview.src = URL.createObjectURL(file); preview.style.display = "block"; } });
+// FORM ABSEN SUBMIT FUNCTION
+const absenForm = document.getElementById('absenForm');
+const absenBtn = document.getElementById('submitBtn3');
+let submittingAbsen=false;
+
+absenForm.addEventListener('submit', e=>{
+  e.preventDefault();
+  if(submittingAbsen) return;
+  submittingAbsen=true;
+  absenBtn.disabled=true;
+  absenBtn.innerText="Mengirim...";
+
+  const fotoInput = document.getElementById("fotoInput");
+  const file = fotoInput.files[0];
+  const formData = new FormData(absenForm);
+
+  if(file){
+    const reader = new FileReader();
+    reader.onload = function(evt){
+      formData.append("fotoBase64", evt.target.result);
+      sendAbsen(formData);
+    }
+    reader.readAsDataURL(file);
+  } else {
+    sendAbsen(formData);
+  }
+});
+
+function sendAbsen(formData){
+  fetch('https://script.google.com/macros/s/AKfycbw9iY_QpkBhDJwytvVM8VYOROgRJlmDWuJ94coZVb9Mxw9l8-opHeLjXqKRQm4QZpvR/exec',{
+    method:'POST',
+    body: formData
+  })
+  .then(r=>r.text())
+  .then(()=>{ 
+    showNotification();
+    absenForm.reset();
+    const now = new Date();
+    const local = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0') + 'T' + String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+    document.querySelector('#absenForm input[name="tanggal"]').value = local;
+  })
+  .catch(()=>{ showNotification(); })
+  .finally(()=>{
+    submittingAbsen=false;
+    absenBtn.disabled=false;
+    absenBtn.innerText='Kirim Data';
+  });
+}
+
+// PREVIEW FOTO
+document.getElementById("fotoInput").addEventListener("change",function(e){
+  const file = e.target.files[0];
+  if(file){
+    const preview = document.getElementById("previewFoto");
+    preview.src = URL.createObjectURL(file);
+    preview.style.display = "block";
+  }
+});
+
+// AMBIL LOKASI
+function ambilLokasi(){
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(function(pos){
+      const lat = pos.coords.latitude;
+      const lon = pos.coords.longitude;
+      document.getElementById("lokasiInput").value = "https://maps.google.com/?q="+lat+","+lon;
+    });
+  }
+}
 </script>
 </body>
 </html>

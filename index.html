@@ -163,24 +163,20 @@ forms.forEach(f=>{
     if(f.id==='absenForm'){
       const fotoInput = document.getElementById("fotoInput");
       const file = fotoInput.files[0];
-      if(file){
-        const reader = new FileReader();
-        reader.onload = function(evt){
-          const formData = new FormData(form);
-          formData.append("fotoBase64", evt.target.result);
-          fetch(f.url,{method:'POST', body:formData})
-            .then(r=>r.text())
-            .then(()=>{ showNotification(); form.reset();
-              const now = new Date();
-              const local = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0') + 'T' + String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
-              document.querySelector('#absenForm input[name="tanggal"]').value = local;
-            })
-            .catch(()=>{ showNotification(); })
-            .finally(()=>{ submitting=false; btn.disabled=false; btn.innerText='Kirim Data'; });
-        }
-        reader.readAsDataURL(file);
-        return;
-      }
+      const formData = new FormData(form);
+      if(file) formData.append("foto", file); // <-- perbaikan utama
+      fetch(f.url,{method:'POST', body:formData})
+        .then(r=>r.text())
+        .then(()=>{
+          showNotification();
+          form.reset();
+          const now = new Date();
+          const local = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0') + 'T' + String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+          document.querySelector('#absenForm input[name="tanggal"]').value = local;
+        })
+        .catch(()=>{ showNotification(); })
+        .finally(()=>{ submitting=false; btn.disabled=false; btn.innerText='Kirim Data'; });
+      return;
     }
 
     fetch(f.url,{method:'POST', body:new FormData(form)})

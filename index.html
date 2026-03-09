@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>CV Papadaan Patra Jaya - Menu</title>
 <style>
-/* ... semua CSS sama persis seperti referensimu ... */
 * { box-sizing: border-box; margin:0; padding:0; }
 body { font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg,#0f4c75,#1b262c); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; flex-direction: column; color: white; overflow-x: hidden; }
 .menu-container { background: white; width: 100%; max-width: 400px; padding: 25px; border-radius: 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); text-align: center; }
@@ -165,7 +164,7 @@ forms.forEach(f=>{
       const file = fotoInput.files[0];
       const formData = new FormData(form);
       if(file){
-        formData.append("foto", file); // <-- nama parameter sesuai Apps Script
+        formData.append("foto", file); // <-- langsung Blob
       }
       fetch(f.url,{method:'POST', body:formData})
         .then(r=>r.text())

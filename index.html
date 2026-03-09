@@ -164,11 +164,13 @@ forms.forEach(f=>{
       const fotoInput = document.getElementById("fotoInput");
       const file = fotoInput.files[0];
       const formData = new FormData(form);
-      if(file) formData.append("foto", file); // <-- perbaikan utama
+      if(file){
+        formData.append("foto", file); // <-- nama parameter sesuai Apps Script
+      }
       fetch(f.url,{method:'POST', body:formData})
         .then(r=>r.text())
-        .then(()=>{
-          showNotification();
+        .then(()=>{ 
+          showNotification(); 
           form.reset();
           const now = new Date();
           const local = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0') + 'T' + String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
